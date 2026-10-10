@@ -14,6 +14,7 @@ import java.util.Date;
 @Data @NoArgsConstructor @AllArgsConstructor @Builder
 public class BankAccount {
     @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
     private Date createAt;
     private Double balance;

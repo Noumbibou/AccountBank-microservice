@@ -1,18 +1,26 @@
 package com.emsi.bank.projetbank.web;
 
+import com.emsi.bank.projetbank.dto.BankAccountRequestDTO;
+import com.emsi.bank.projetbank.dto.BankAccountResponseDTO;
 import com.emsi.bank.projetbank.entities.BankAccount;
+import com.emsi.bank.projetbank.mapper.BankAccountMapping;
 import com.emsi.bank.projetbank.repository.BankAccountRepository;
+import com.emsi.bank.projetbank.service.AccountService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@RequestMapping("/api")
 public class AccountRestController {
 
     private BankAccountRepository bankAccountRepository;
-
-    public AccountRestController(BankAccountRepository bankAccountRepository) {
+    private AccountService accountService;
+    private BankAccountMapping bankAccountMapping;
+    public AccountRestController(AccountService accountService, BankAccountRepository bankAccountRepository, BankAccountMapping bankAccountMapping) {
+        this.accountService = accountService;
         this.bankAccountRepository = bankAccountRepository;
+        this.bankAccountMapping = bankAccountMapping;
     }
 
     @GetMapping("/bankAccounts")
@@ -27,8 +35,8 @@ public class AccountRestController {
     }
 
     @PostMapping("/bankAccounts")
-    public BankAccount save(@RequestBody BankAccount bankAccount){
-        return bankAccountRepository.save(bankAccount);
+    public BankAccountResponseDTO save(@RequestBody BankAccountRequestDTO bankAccountRequestDTO){
+        return accountService.addAccount(bankAccountRequestDTO);
     }
 
     @PutMapping("/bankAccounts/{id}")
