@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
-import java.util.UUID;
 
 @Service
 @Transactional
@@ -33,6 +32,23 @@ public class AccountServiceImpl implements AccountService {
 //                .type(bankAccountDTO.getType())
 //                .currency(bankAccountDTO.getCurrency())
 //                .build();
+
+        BankAccount saveBankAccount = bankAccountRepository.save(bankAccount);
+        BankAccountResponseDTO bankAccountResponseDTO = bankAccountMapping.bankAccountToBankAccountResponseDTO(saveBankAccount);
+        return bankAccountResponseDTO;
+        //return BankAccountResponseDTO.builder().id(saveBankAccount.getId()).createAt(saveBankAccount.getCreateAt()).balance(saveBankAccount.getBalance()).currency(saveBankAccount.getCurrency()).type(saveBankAccount.getType()).build();
+    }
+
+    @Override
+    public BankAccountResponseDTO updateAccount(String id, BankAccountRequestDTO bankAccountDTO) {
+        //BankAccount bankAccount = bankAccountMapping.BankAccountResquestDtoToBankAccount(bankAccountDTO);
+        BankAccount bankAccount = BankAccount.builder()
+                .id(id)
+                .createAt(new Date())
+                .balance(bankAccountDTO.getBalance())
+                .type(bankAccountDTO.getType())
+                .currency(bankAccountDTO.getCurrency())
+                .build();
 
         BankAccount saveBankAccount = bankAccountRepository.save(bankAccount);
         BankAccountResponseDTO bankAccountResponseDTO = bankAccountMapping.bankAccountToBankAccountResponseDTO(saveBankAccount);

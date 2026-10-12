@@ -6,4 +6,6 @@ import com.emsi.bank.projetbank.entities.BankAccount;
 
 public interface AccountService {
      BankAccountResponseDTO addAccount(BankAccountRequestDTO bankAccountDTO);
+
+     BankAccountResponseDTO updateAccount(String id, BankAccountRequestDTO bankAccountDTO);
 }

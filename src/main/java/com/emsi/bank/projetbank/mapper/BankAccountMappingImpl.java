@@ -14,9 +14,12 @@ public class BankAccountMappingImpl implements BankAccountMapping {
 
     @Override
     public BankAccount BankAccountResquestDtoToBankAccount(BankAccountRequestDTO bankAccountRequestDTO) {
-        BankAccount bankAccount = new BankAccount();
-        BeanUtils.copyProperties(bankAccountRequestDTO, bankAccount);
-        return bankAccount;
+        return BankAccount.builder()
+                .createAt(new Date())
+                .balance(bankAccountRequestDTO.getBalance())
+                .type(bankAccountRequestDTO.getType())
+                .currency(bankAccountRequestDTO.getCurrency())
+                .build();
     }
 
     @Override
